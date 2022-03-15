@@ -2,42 +2,153 @@
     width: 100px;
     height: 100px;
     border: 1px solid red;
+/* Soluzione */
+    transition: all 2s;
 }
+
+
+.ex-1-square:hover {
+    background-color: red;
+}
+/* Fine soluzione */
+
 .ex-2-square {
     width: 100px;
     height: 100px;
     background: red;
+/* Soluzione */
+    transition: all 2s;
 }
+
+.ex-2-square:active {
+    width: 100%;
+}
+/* Fine soluzione */
+
 .ex-3-square {
     width: 100px;
     height: 100px;
     background: red;
+/* Soluzione */
+    transition: all .5s;
 }
+
+.ex-3-square:hover {
+    border-radius: 50%;
+}
+/* Fine soluzione */
+
 .ex-4-square {
     width: 100px;
     height: 100px;
     background: red;
+/* Soluzione */
+    transition: all 2s;
 }
+
+.ex-4-square:hover {
+    background: transparent;
+}
+/* Fine soluzione */
+
 .ex-5-square {
     margin: 20px;
     width: 60px;
     height: 60px;
     background: red;
+/* Soluzione */
+    transition: all 1s;
 }
+
+.ex-5-square:hover {
+    transform: scale(1.666);
+}
+
+.ex-5-square:active {
+    transform: scale(.5);
+}
+/* Fine soluzione */
+
 .ex-6-img, .ex-7-img, .ex-8-img {
     width: 500px;
 }
 
+/* Soluzione */
+.ex-6-img:hover {
+    filter: grayscale(1);
+}
+/* Fine soluzione */
+
+/* Soluzione */
+.ex-7-img {
+    transition: all 2s;
+}
+
+.ex-7-img:hover {
+    filter: grayscale(.6) sepia(.5);
+}
+/* Fine soluzione */
+
+/* Soluzione */
+.ex-8-img {
+    transition: all .5s;
+}
+
+.ex-8-img:hover {
+    filter: grayscale(.6) sepia(.5);
+    border-radius: 3rem;
+}
+/* Fine soluzione */
+
 .ex-9-img {
     margin: 50px 100px;
     width: 400px;
+/* Soluzione */
+    transition: all .5s;
 }
+
+.ex-9-img:hover {
+    filter: grayscale(.6) sepia(.5);
+    border-radius: 3rem;
+    transform: scale(1.5);
+}
+/* Fine soluzione */
+
 .ex-10-icon {
     font-size: 60px;
+/* Soluzione */
+    animation: rotate .5s linear infinite;
 }
+
+@keyframes rotate {
+    100% {
+        transform: rotate(1turn);
+    }
+}
+/* Fine soluzione */
+
 .ex-11-icon {
     font-size: 60px;
 }
+
+/* Soluzione */
+.ex-11-icon:hover {
+    animation: wonkyrotate 2s linear;
+}
+
+@keyframes wonkyrotate {
+    0% {
+        transform: rotate(0);
+    }
+    75% {
+        transform: rotate(270deg);
+    }
+    100% {
+        transform: rotate(0);
+    }
+}
+/* Fine soluzione */
+
 .ex-12-button, .ex-13-button {
     position: relative;
     display: block;
@@ -66,4 +177,155 @@
     background: #f5f5f5;
     width: 60px;
     height: 20px;
+}
+
+/* Soluzione esercizio 12 */
+
+.ex-12-button:hover .ex-12-top-white {
+    animation: right-and-back 2s linear;
+}
+
+@keyframes right-and-back {
+    0% {
+        top: -10px;
+        left: 10%;
+    }
+    50% {
+        left: calc(100% - 60px);
+    }
+    100% {
+        top: -10px;
+        left: 10%;
+    }
+}
+
+.ex-12-button:hover .ex-12-bottom-white {
+    animation: left-and-back 2s linear;
+}
+
+@keyframes left-and-back {
+    0% {
+        bottom: -10px;
+        right: 20%;
+    }
+    50% {
+        right: calc(100% - 60px);
+    }
+    100% {
+        bottom: -10px;
+        right: 20%;
+    }
+}
+
+/* Fine soluzione esercizio 12 */
+
+/* Soluzione esercizio 13 */
+
+.col-xs-13 .well {
+    /* nascondiamo i rettangolini se escono dal bordo */
+    overflow: hidden;
+}
+
+.ex-13-button:hover .ex-13-top-white {
+    animation: top-go-around 2s linear;
+}
+
+/* 
+Gli spazi bianchi sul bordo del bottone sono in realtà dei rettagoli
+che si sovrappongono al bordo.
+
+Voglio fare in modo che questi rettangoli camminino sul perimetro del bottone
+a velocità costante, completando un giro completo.
+
+Dati:
+ - la dimensione del bottone (200 x 70 pixel);
+ - la dimensione dei rettangoli (60 x 20 pixel)
+ - la posizione iniziale dei rettangoli
+    nel caso del rettangolo superiore, il suo centro si trova
+    a 50 pixel a destra rispetto all'angolo in alto a sinistra.
+    (ovvero: 20 pixel dato da "left: 10%" più 30 pixel (la metà della sua larghezza))
+
+Questo vuol dire che il centro del rettangolo ha già "camminato" 50 pixel
+lungo il perimetro rispetto all'angolo in ALTO A SINISTRA.
+
+Se vogliamo una velocità costante, vuol dire che il rettangolo si muoverà
+a un numero costante di pixel per ogni percentuale dell'animazione.
+
+Dividiamo il perimetro del bottone (200*2 + 70*2 = 540px) per 100 per capire di quanti pixel
+vogliamo che spostare il rettangolo a ogni percentuale dell'animazione. Il risultato è 5.4 px
+
+Calcoliamo quanti pixel avrà percorso il rettangolo per ciascun angolo:
+- ANGOLO IN ALTO A DESTRA:    150 pixel (200px larghezza del bottone meno i 50px già camminati)
+- ANGOLO IN BASSO A DESTRA:   220 px (i 150px di sopra più l'altezza del bottone )
+- ANGOLO IN BASSO A SINISTRA: 420 px (i 220px di sopra più la larghezza del bottone)
+- ANGOLO IN ALTO A SINISTRA:  490 px
+
+Convertiamo i px in percentuali dividendoli ciascuno per 5.4:
+
+- ANGOLO IN ALTO A DESTRA:    27.78%
+- ANGOLO IN BASSO A DESTRA:   40.74%
+- ANGOLO IN BASSO A SINISTRA: 77.78%
+- ANGOLO IN ALTO A SINISTRA:  90.74% 
+
+Questi sono i valori percentuali dell'animazione in cui piazzerò il rettangolo su ciascun angolo
+Calcoli analoghi li farò anche per il rettangolino in basso.
+*/
+
+
+@keyframes top-go-around {
+    0% {
+        top: -10px;
+        left: 10%;
+    }
+    28% {
+        top: -10px;
+        left: calc(100% - 30px);
+    }
+    41% {
+        top: 60px;
+        left: calc(100% - 30px);
+    }
+    78% {
+        top: 60px;
+        left: -30px;
+    }
+    91% {
+        top: -10px;
+        left: -30px;
+    }
+    100% {
+        top: -10px;
+        left: 10%;
+    }
+}
+
+.ex-13-button:hover .ex-13-bottom-white {
+    animation: bottom-go-around 2s linear;
+}
+
+@keyframes bottom-go-around {
+    0% {
+        bottom: -10px;
+        right: 20%;
+    }
+    24% {
+        bottom: -10px;
+        right: calc(100% - 30px);
+    }
+    37% {
+        bottom: 60px;
+        right: calc(100% - 30px);
+    }
+    74% {
+        bottom: 60px;
+        right: -30px;
+    }
+    87% {
+        bottom: -10px;
+        right: -30px;
+    }
+    100% {
+        bottom: -10px;
+        right: 10%;
+    }
 }
